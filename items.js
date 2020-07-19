@@ -1,8 +1,5 @@
-itemAdd('Woolies', 'Coffee Luke');
-itemAdd('Woolies', 'Coffee Anita');
-itemAdd('Woolies', 'Coffee Jar');
-itemAdd('Woolies', 'Milk Luke');
-itemAdd('Woolies', 'Milk Anita');
+itemAdd('Woolies', 'Coffee');
+itemAdd('Woolies', 'Milk');
 itemAdd('Woolies', 'Almond Milk');
 
 itemAdd('Woolies', 'Tomato Relish');
@@ -34,7 +31,7 @@ itemAdd('Woolies', 'Deodorant');
 itemAdd('Woolies', 'Toothpaste');
 itemAdd('Woolies', 'Shampoo');
 itemAdd('Woolies', 'Conditioner');
-itemAdd('Woolies', 'Ear Qtips');
+itemAdd('Woolies', 'Qtips');
 
 itemAdd('Aldi', 'Cheese');
 itemAdd('Aldi', 'Laundry Detergent');
