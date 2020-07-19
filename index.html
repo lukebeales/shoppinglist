@@ -1,0 +1,154 @@
+<html>
+    <head>
+        <title>Shopping List</title>
+        <script>
+            // store all the categories and items for the shopping list here.
+            var $items = new Array();
+
+            function itemAdd($itemCategory, $itemName) {
+                // store a false match incase the category doesn't exist
+                var $match = false;
+
+                // go through all the categories
+                for ( $i = 0; $i < $items.length; $i++ ) {
+                    // if the category already exists
+                    if ( ( $items[$i]["type"] == "category" ) && ( $items[$i]["name"] == $itemCategory ) ) {
+
+                        // add the item to the category
+                        $items[$i]["items"].push({
+                            "type": "item",
+                            "name": $itemName
+                        });
+                        $match = true;
+                        break;
+                    }
+
+                }
+
+                if ( $match != true ) {
+                    // add a new category
+                    $items.push({
+                        "type": "category",
+                        "name": $itemCategory,
+                        "items": new Array()
+                    })
+                    // add the item on to the new category
+                    $items[$items.length-1]["items"].push({
+                        "type": "item",
+                        "name": $itemName
+                    });
+                }
+                    
+            }
+
+
+            // display a category
+            function categoryDisplay($category) {
+                // if we have items to display
+                if ( ( $category["items"] ) && ( $category["items"].length > 0 ) ) {
+
+                    var $i;
+
+                    // open the category and append it to the node
+                    $output += '<div class="" style="display: table-cell; padding: 20px;">';
+
+                    $output += '<div class="checkbox">';
+                    $output += '<h3>';
+                    $output += '<input type="checkbox" checked="checked" class="hidden-print" onchange="categoryAdjust(this);">';
+                    $output += $category["name"];
+                    $output += '</h3>';
+                    $output += '</div>';
+
+                    // go through all the items within this category
+                    for ( $i = 0; $i < $category["items"].length; $i++ ) {
+
+                        // display the item
+                        itemDisplay($category["items"][$i]);
+
+                    }
+
+                    $output += '</div>';
+                }
+            }
+
+
+            // add or remove the print class
+            function categoryAdjust($category) {
+                if ( $($category).prop("checked") ) {
+                    $($category).parent().parent().parent().removeClass('hidden-print');
+                } else {
+                    $($category).parent().parent().parent().addClass('hidden-print');
+                }
+            }
+
+            // add or remove the print class
+            function itemAdjust($item) {
+                if ( $($item).prop("checked") ) {
+                    $($item).parent().parent().removeClass('hidden-print');
+                } else {
+                    $($item).parent().parent().addClass('hidden-print');
+                }
+            }
+
+
+            // display an item
+            function itemDisplay($item) {
+                $output += '<div class="checkbox hidden-print" style="border-bottom: 1px rgba(0, 0, 0, 0.2) solid;">';
+                $output += '<label>';
+                $output += '<input type="checkbox" class="hidden-print" onchange="itemAdjust(this);">';
+                $output += '' + $item["name"];
+                $output += '</label>';
+                $output += '</div>';
+            }
+
+            
+            var $output = '';
+
+            // init the display of the shopping list!
+            function itemsInit() {
+
+                // go through the whole item tree
+                for ( $i = 0; $i < $items.length; $i++ ) {
+                        
+                    // if we're seeing a category
+                    if ( $items[$i]["type"] == "category" ) {
+
+                        // display a category
+                        categoryDisplay($items[$i]);
+
+                    }
+
+                }
+
+                // now stick all the 'output' in the target container
+                $('#shoppinglist').html($output);
+            }
+
+        </script>
+        <script src="items.js"></script>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    </head>
+    <body>
+        <div class="hidden-print">
+            <button type="submit" class="btn btn-primary" onclick="window.print();">Print</button>
+        </div>
+        <form id="shoppinglist">
+        </form>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script>
+            // show the shopping list!
+            itemsInit();
+        </script>
+    </body>
+</html>
+    
